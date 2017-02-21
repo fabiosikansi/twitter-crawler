@@ -1,0 +1,44 @@
+{
+  "name": "twitter-crawler",
+  "version": "1.0.0",
+  "description": "An app to crawler twitter streaming data and \u001b",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "npm run deploy-crawler && npm run deploy-socket && npm run deploy-db && npm run deploy-main",
+    "watch": "webpack --progress --colors --watch",
+    "deploy-crawler": "babel crawler/crawler.js --out-file crawler/crawler-compiled.js",
+    "deploy-socket": "babel socket/socket.js --out-file socket/socket-compiled.js",
+    "deploy-db": "babel crawler/database.js --out-file crawler/database-compiled.js",
+    "deploy-main": "babel main.js --out-file main-compiled.js",
+    "start": "node main-compiled.js",
+    "server": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fabio Sikansi",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.15.2",
+    "express": "^4.14.0",
+    "moment": "^2.17.0",
+    "mongodb": "^2.2.22",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "socket.io": "^1.6.0",
+    "twitter": "^1.4.0",
+	"websocket": "^1.0.24"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2016": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "css-loader": "^0.26.0",
+    "node-sass": "^3.13.0",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
+    "webpack-dev-server": "^1.16.2"
+  }
+}

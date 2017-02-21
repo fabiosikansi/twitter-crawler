@@ -1,0 +1,49 @@
+@import "./../../../css/utils";
+
+.counter {
+  background: #373A3C;
+  @include rounded(1.0em);
+  height: 6.5rem;
+  position: relative;
+
+  .title {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    top: 0rem;
+    width: 100%;
+  }
+
+  .value {
+    display: block;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 5rem;
+    line-height: 6.5rem;
+    position: absolute;
+    top: 0rem;
+    width: 100%;
+
+    &.sm {
+      font-size: 3rem;
+    }
+
+    &.xs {
+      font-size: 2rem;
+    }
+  }
+
+  .unit {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    bottom: 0rem;
+    width: 100%;
+    font-size: 0.7rem;
+  }
+}

@@ -66,7 +66,7 @@ var TwitterHandler = function () {
 			}
 			this.db.save(tweet).then(function () {
 				_this2.calculateLastMinute(true);
-				_this2.socket.broadcastTweet(tweet);
+				if (_this2.broadcastTweetDecision()) _this2.socket.broadcastTweet(tweet);
 			}, function () {
 				console.log("Reject");
 			});
@@ -112,6 +112,14 @@ var TwitterHandler = function () {
 				return d > parseFloat(now.format('X')) - 60;
 			});
 			this.stats.lastMinuteCounter = this.stats.lastMinute.length;
+		}
+	}, {
+		key: 'broadcastTweetDecision',
+		value: function broadcastTweetDecision() {
+			var log = Math.log10(this.stats.lastMinuteCounter);
+			if (log <= 2.0) return true;
+			if (log <= 3.0) return Math.random() <= 0.1;
+			return Math.random() <= 0.01;
 		}
 	}]);
 

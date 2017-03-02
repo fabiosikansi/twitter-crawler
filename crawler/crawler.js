@@ -38,7 +38,7 @@ export default class TwitterHandler {
 		}
 		this.db.save(tweet).then(() => {
 			this.calculateLastMinute(true);
-			this.socket.broadcastTweet(tweet);
+			if (this.broadcastTweetDecision()) this.socket.broadcastTweet(tweet);
 		},() => {
 			console.log("Reject");
 		});
@@ -77,6 +77,13 @@ export default class TwitterHandler {
 		if (add) this.stats.lastMinute.push(parseFloat(now.format('X')));
 		this.stats.lastMinute = this.stats.lastMinute.filter((d) => d > parseFloat(now.format('X'))-60);
 		this.stats.lastMinuteCounter = this.stats.lastMinute.length;
+	}
+
+	broadcastTweetDecision() {
+		var log = Math.log10(this.stats.lastMinuteCounter);
+		if (log <= 2.0) return true;
+		if (log <= 3.0) return Math.random() <= 0.1;
+		return Math.random() <= 0.01;
 	}
 
 }

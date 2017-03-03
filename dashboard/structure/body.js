@@ -4,10 +4,10 @@ import {connect} from 'react-redux';
 import Alerts from './../components/Alerts';
 import Counter from './../components/Counter';
 import TweetsList from './../components/TweetsList';
+import TweetsChart from './../components/TweetsChart';
 
 class Body extends React.Component {
     render() {
-
         return (
             <div className="container body">
                 <div className="row">
@@ -30,7 +30,12 @@ class Body extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <TweetsList tweets={this.props.tweets} />
+                    <div className="col-xs-12 col-md-6">
+                        <TweetsChart data={this.props.stats.chart} />
+                    </div>
+                    <div className="col-xs-12 col-md-6">
+                        <TweetsList tweets={this.props.tweets} />
+                    </div>
                 </div>
             </div>
 

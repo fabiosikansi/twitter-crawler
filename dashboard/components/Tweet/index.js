@@ -32,7 +32,6 @@ export default class Tweet extends React.Component {
         this._timer = setTimeout(function(){
             this.state.visible = false;
             this._timer = null;
-            this.props.tweet = false;
         }.bind(this), this.props.delay);
     }
 
@@ -43,7 +42,7 @@ export default class Tweet extends React.Component {
     render() {
         return this.state.visible
             ?
-            <div className="card"  transitionName="thing">
+            <div className="card">
                 <div className="card-img">
                     <img className="card-img-left" src={this.props.tweet.user.profile_image_url} alt="" />
                 </div>

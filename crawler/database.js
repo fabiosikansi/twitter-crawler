@@ -13,7 +13,13 @@ class Database {
 
 var connect = () => new Promise ((resolve,reject) => {
 	console.log("Connecting to " + config.db.url);
-	MongoClient.connect(config.db.url).then(
+	MongoClient.connect(config.db.url,{
+		server: {
+			socketOptions: {
+				connectTimeoutMS: 500
+			}
+		}
+	}).then(
 		(db) => resolve(new Database(db)),
 		(err,db) => {
 			console.log(err);

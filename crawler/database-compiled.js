@@ -38,7 +38,13 @@ var Database = function () {
 var connect = function connect() {
 	return new Promise(function (resolve, reject) {
 		console.log("Connecting to " + _config2.default.db.url);
-		_mongodb.MongoClient.connect(_config2.default.db.url).then(function (db) {
+		_mongodb.MongoClient.connect(_config2.default.db.url, {
+			server: {
+				socketOptions: {
+					connectTimeoutMS: 500
+				}
+			}
+		}).then(function (db) {
 			return resolve(new Database(db));
 		}, function (err, db) {
 			console.log(err);

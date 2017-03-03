@@ -23,10 +23,13 @@ class TwitterApp extends React.Component {
     }
 }
 
-const mapStateToProps = (state) =>  ({
-    stats: state.stats,
-    alerts: state.alerts
-});
+const mapStateToProps = (state) =>  {
+    state.stats.chart = (Array.isArray(state.stats.chart)) ? {series: [state.stats.chart]} : {series: [[]]};
+    return {
+        stats: state.stats,
+            alerts: state.alerts
+    }
+};
 
 const mapDispatchToProps = (dispatch) => ({
     actions: {

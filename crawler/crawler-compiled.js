@@ -32,6 +32,7 @@ var TwitterHandler = function () {
 		this.stats.start = (0, _moment2.default)();
 		this.stats.count = 0;
 		this.stats.lastMinute = [];
+		this.stats.chart = [];
 		this.db = db; //usar db.save(tweet).then(() => success,() => err);
 		this.client = new _twitter2.default(_config2.default.twitter);
 		this.info = { success: 0, error: 0 };
@@ -52,6 +53,7 @@ var TwitterHandler = function () {
 			this.calculateTime();
 			this.calculateRate();
 			this.calculateLastMinute(false);
+			this.processLastMinuteChart();
 			this.socket.broadcastStats(this.stats);
 		}
 	}, {
@@ -112,6 +114,31 @@ var TwitterHandler = function () {
 				return d > parseFloat(now.format('X')) - 60;
 			});
 			this.stats.lastMinuteCounter = this.stats.lastMinute.length;
+		}
+	}, {
+		key: 'processLastMinuteChart',
+		value: function processLastMinuteChart() {
+			var now = (0, _moment2.default)();
+			var data = {},
+			    chart = [];
+			var max = parseInt(now.format('X'));
+			this.stats.lastMinute.forEach(function (d) {
+				if (typeof data[parseInt(d)] == "undefined") {
+					data[parseInt(d)] = 0;
+				}
+				data[parseInt(d)]++;
+				//max = max < parseInt(d) ? parseInt(d) : max;
+			});
+
+			for (var i = max - 60; i <= max; ++i) {
+				if (typeof data[i] == "undefined") {
+					chart.push(0);
+				} else {
+					chart.push(data[i]);
+				}
+			}
+
+			this.stats.chart = chart;
 		}
 	}, {
 		key: 'broadcastTweetDecision',

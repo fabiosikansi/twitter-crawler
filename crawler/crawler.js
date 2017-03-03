@@ -9,6 +9,7 @@ export default class TwitterHandler {
 		this.stats.start = moment();
 		this.stats.count = 0;
 		this.stats.lastMinute = [];
+		this.stats.chart = [];
 		this.db = db; //usar db.save(tweet).then(() => success,() => err);
 		this.client = new Twitter(config.twitter);
 		this.info = {success: 0,error: 0};
@@ -27,6 +28,7 @@ export default class TwitterHandler {
 		this.calculateTime();
 		this.calculateRate();
 		this.calculateLastMinute(false);
+		this.processLastMinuteChart();
 		this.socket.broadcastStats(this.stats);
 	}
 
@@ -79,9 +81,32 @@ export default class TwitterHandler {
 		this.stats.lastMinuteCounter = this.stats.lastMinute.length;
 	}
 
+	processLastMinuteChart() {
+		const now = moment();
+		var data = {},chart=[];
+		var max = parseInt(now.format('X'));
+		this.stats.lastMinute.forEach((d) => {
+			if (typeof data[parseInt(d)] == "undefined") {
+				data[parseInt(d)] = 0;
+			}
+			data[parseInt(d)]++;
+		});
+
+		for (var i = max-60; i <= max; ++i) {
+			if (typeof data[i] == "undefined") {
+				chart.push(0);
+			} else {
+				chart.push(data[i]);
+			}
+
+		}
+
+		this.stats.chart = chart;
+	}
+
 	broadcastTweetDecision() {
 		var log = Math.log10(this.stats.lastMinuteCounter);
-		if (log <= 2.0) return true;
+		if (log <= 2.2) return true;
 		if (log <= 3.0) return Math.random() <= 0.1;
 		return Math.random() <= 0.01;
 	}

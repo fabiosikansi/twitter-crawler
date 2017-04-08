@@ -17,16 +17,16 @@ class Body extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-xs-6 col-md-3">
-                        <Counter title="Tweets collected" unit="tweets" value={this.props.stats.count} />
+                        <Counter title="Tweets collected" unit="tweets" color="red" icon="twitter" value={this.props.stats.count} />
                     </div>
                     <div className="col-xs-6 col-md-3">
-                        <Counter title="Elapsed time" unit="" value={this.props.stats.time} />
+                        <Counter title="Elapsed time" unit="" color="green" icon="clock-o" value={this.props.stats.time} />
                     </div>
                     <div className="col-xs-6 col-md-3">
-                        <Counter title="Crawler rate" unit="tweets per minute" value={this.props.stats.rate} />
+                        <Counter title="Crawler rate" unit="tweets per minute" color="purple" icon="tachometer" value={this.props.stats.rate} />
                     </div>
                     <div className="col-xs-6 col-md-3">
-                        <Counter title="Last minute" unit="tweets" value={this.props.stats.lastMinuteCounter} />
+                        <Counter title="Last minute" unit="tweets" color="yellow" icon="plus-circle" value={this.props.stats.lastMinuteCounter} />
                     </div>
                 </div>
                 <div className="row">

@@ -58,6 +58,7 @@ export default class TwitterHandler {
 	}
 
 	calculateTime () {
+		//TODO: Verificar calculo quando muda o dia, ou se o problema ocorre quando passa de 1 hora
 		const now = moment();
 		let diff = now.diff(this.stats.start,'minutes');
 		if (diff < 60) {

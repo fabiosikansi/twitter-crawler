@@ -1,49 +1,80 @@
 @import "./../../../css/utils";
-
-.counter {
-  background: #373A3C;
-  @include rounded(1.0em);
-  height: 6.5rem;
+.counter .card-block {
+  padding: 0;
+  margin: 0;
   position: relative;
+  overflow: hidden;
+}
 
-  .title {
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    color: white;
-    position: absolute;
-    top: 0rem;
-    width: 100%;
-  }
+.counter .card-block .card-title {
+  text-transform: uppercase;
+  padding: 0.25rem;
+  font-size: 1rem;
+  margin-bottom: 0;
+}
 
-  .value {
-    display: block;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    font-size: 5rem;
-    line-height: 6.5rem;
-    position: absolute;
-    top: 0rem;
-    width: 100%;
+.counter .card-block .card-text {
+  margin-bottom: 0;
+}
 
-    &.sm {
-      font-size: 3rem;
-    }
+.counter .card-block .card-text .card-value {
+  font-size: 2.6rem;
+  line-height: 4rem;
+  padding-left: 0.2rem;
+}
 
-    &.xs {
-      font-size: 2rem;
-    }
-  }
-
-  .unit {
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    color: white;
-    position: absolute;
-    bottom: 0rem;
-    width: 100%;
-    font-size: 0.7rem;
+@media(max-width:768px) {
+  .counter .card-block .card-text .card-value.lg {
+    font-size: 3rem;
   }
 }
+
+@media(min-width:769px) {
+  .counter .card-block .card-text .card-value.lg {
+    font-size: 4rem;
+  }
+}
+
+.counter .card-block .card-text .card-variation {
+  margin-left: 1rem;
+}
+
+.counter .card-block .card-icon {
+  position: absolute;
+  right: 0.25rem;
+  top: 0.5rem;
+  font-size: 4rem;
+  opacity: 0.7;
+}
+
+@media(max-width:768px) {
+  .counter .card-block .card-icon {
+    right: 0.25rem;
+    top: 0.25rem;
+    font-size: 1.5rem;
+    opacity: 0.95;
+  }
+}
+
+.card-sparkline {
+  position: relative;
+  bottom: -6px;
+  left: 0;
+}
+
+
+.bg-red {
+  background: #E64759;
+  color: #F0F3F6; }
+
+.bg-green {
+  background: #27ae60;
+  color: #F0F3F6; }
+
+.bg-purple {
+  background: #9b59b6;
+  color: #F0F3F6; }
+
+.bg-yellow {
+  background: #e67e22;
+  color: #F0F3F6; }

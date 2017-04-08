@@ -42,7 +42,7 @@ export default class Tweet extends React.Component {
     render() {
         return this.state.visible
             ?
-            <div className="card">
+            <div className="tweet card">
                 <div className="card-img">
                     <img className="card-img-left" src={this.props.tweet.user.profile_image_url} alt="" />
                 </div>

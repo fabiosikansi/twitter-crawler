@@ -37,7 +37,7 @@ class Counter extends Component {
                         {badge}
                     </CardText>
                     <div className="card-sparkline">
-                        <Sparklines data={this.props.data} limit={15} min={0} max={21} width={100} height={20} margin={0}>
+                        <Sparklines data={this.props.history} limit={60} min={0} max={Math.max.apply(null,this.props.history) + 1} width={100} height={20} margin={0}>
                             <SparklinesCurve color="white" />
                         </Sparklines>
                     </div>

@@ -58,6 +58,6 @@ _databaseCompiled2.default.connect().then(function (database) {
 	app.server.listen(_config2.default.dashboard.port);
 	console.log("Server running on port " + _config2.default.dashboard.port);
 	var SocketHandler = new _socketCompiled2.default(socket);
-	alerts.push({ "title": "Database not connected!", "type": "danger", "message": "Dashboard demo! Your data are not being saved to any destination" });
+	alerts.push({ "title": "Database not connected!", "type": "danger", "message": "Dashboard demo! Your data is not being saved to any destination" });
 	new _crawlerCompiled2.default(database, SocketHandler);
 });

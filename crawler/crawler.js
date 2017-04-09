@@ -9,6 +9,9 @@ export default class TwitterHandler {
 		this.stats.start = moment();
 		this.stats.count = 0;
 		this.stats.lastMinute = [];
+		this.stats.lastMinuteHistory = [];
+		this.stats.rateHistory = [];
+		this.stats.tweetsHistory = [];
 		this.stats.chart = [];
 		this.db = db; //usar db.save(tweet).then(() => success,() => err);
 		this.client = new Twitter(config.twitter);
@@ -25,6 +28,10 @@ export default class TwitterHandler {
 	}
 
 	updateStats () {
+		this.stats.tweetsHistory.push(this.stats.count);
+		if (this.stats.tweetsHistory.length > 60) {
+			this.stats.tweetsHistory.shift();
+		}
 		this.calculateTime();
 		this.calculateRate();
 		this.calculateLastMinute(false);
@@ -72,7 +79,12 @@ export default class TwitterHandler {
 		const now = moment();
 		let diff = now.diff(this.stats.start,'seconds');
 		if (diff == 0) diff = 1;
+		const rate = (this.stats.count*60/diff).toFixed(1);
 		this.stats.rate = (this.stats.count*60/diff).toFixed(1);
+		this.stats.rateHistory.push(rate);
+		if (this.stats.rateHistory.length > 60) {
+			this.stats.rateHistory.shift();
+		}
 	}
 
 	calculateLastMinute(add) {
@@ -80,6 +92,10 @@ export default class TwitterHandler {
 		if (add) this.stats.lastMinute.push(parseFloat(now.format('X')));
 		this.stats.lastMinute = this.stats.lastMinute.filter((d) => d > parseFloat(now.format('X'))-60);
 		this.stats.lastMinuteCounter = this.stats.lastMinute.length;
+		this.stats.lastMinuteHistory.push(this.stats.lastMinute.length);
+		if (this.stats.lastMinuteHistory.length > 60) {
+			this.stats.lastMinuteHistory.shift();
+		}
 	}
 
 	processLastMinuteChart() {

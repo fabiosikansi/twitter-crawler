@@ -34,6 +34,6 @@ db.connect().then((database) => {
 	app.server.listen(config.dashboard.port);
 	console.log("Server running on port " + config.dashboard.port);
 	let SocketHandler = new Socket(socket);
-	alerts.push({"title": "Database not connected!", "type": "danger","message": "Dashboard demo! Your data are not being saved to any destination"});
+	alerts.push({"title": "Database not connected!", "type": "danger","message": "Dashboard demo! Your data is not being saved to any destination"});
 	new TwitterHandler(database,SocketHandler);
 });

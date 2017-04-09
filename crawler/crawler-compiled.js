@@ -32,6 +32,9 @@ var TwitterHandler = function () {
 		this.stats.start = (0, _moment2.default)();
 		this.stats.count = 0;
 		this.stats.lastMinute = [];
+		this.stats.lastMinuteHistory = [];
+		this.stats.rateHistory = [];
+		this.stats.tweetsHistory = [];
 		this.stats.chart = [];
 		this.db = db; //usar db.save(tweet).then(() => success,() => err);
 		this.client = new _twitter2.default(_config2.default.twitter);
@@ -50,6 +53,10 @@ var TwitterHandler = function () {
 	_createClass(TwitterHandler, [{
 		key: 'updateStats',
 		value: function updateStats() {
+			this.stats.tweetsHistory.push(this.stats.count);
+			if (this.stats.tweetsHistory.length > 60) {
+				this.stats.tweetsHistory.shift();
+			}
 			this.calculateTime();
 			this.calculateRate();
 			this.calculateLastMinute(false);
@@ -89,6 +96,7 @@ var TwitterHandler = function () {
 	}, {
 		key: 'calculateTime',
 		value: function calculateTime() {
+			//TODO: Verificar calculo quando muda o dia, ou se o problema ocorre quando passa de 1 hora
 			var now = (0, _moment2.default)();
 			var diff = now.diff(this.stats.start, 'minutes');
 			if (diff < 60) {
@@ -103,7 +111,12 @@ var TwitterHandler = function () {
 			var now = (0, _moment2.default)();
 			var diff = now.diff(this.stats.start, 'seconds');
 			if (diff == 0) diff = 1;
+			var rate = (this.stats.count * 60 / diff).toFixed(1);
 			this.stats.rate = (this.stats.count * 60 / diff).toFixed(1);
+			this.stats.rateHistory.push(rate);
+			if (this.stats.rateHistory.length > 60) {
+				this.stats.rateHistory.shift();
+			}
 		}
 	}, {
 		key: 'calculateLastMinute',
@@ -114,6 +127,10 @@ var TwitterHandler = function () {
 				return d > parseFloat(now.format('X')) - 60;
 			});
 			this.stats.lastMinuteCounter = this.stats.lastMinute.length;
+			this.stats.lastMinuteHistory.push(this.stats.lastMinute.length);
+			if (this.stats.lastMinuteHistory.length > 60) {
+				this.stats.lastMinuteHistory.shift();
+			}
 		}
 	}, {
 		key: 'processLastMinuteChart',
@@ -127,7 +144,6 @@ var TwitterHandler = function () {
 					data[parseInt(d)] = 0;
 				}
 				data[parseInt(d)]++;
-				//max = max < parseInt(d) ? parseInt(d) : max;
 			});
 
 			for (var i = max - 60; i <= max; ++i) {
@@ -144,7 +160,7 @@ var TwitterHandler = function () {
 		key: 'broadcastTweetDecision',
 		value: function broadcastTweetDecision() {
 			var log = Math.log10(this.stats.lastMinuteCounter);
-			if (log <= 2.0) return true;
+			if (log <= 2.2) return true;
 			if (log <= 3.0) return Math.random() <= 0.1;
 			return Math.random() <= 0.01;
 		}

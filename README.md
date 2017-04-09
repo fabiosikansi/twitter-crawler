@@ -2,6 +2,8 @@
 
 A node.js and mongoDB application to crawl twitter data using the twitter API.
 
+![demo](https://raw.githubusercontent.com/fabiosikansi/twitter-crawler/master/img/demo.jpg)
+
 ### Installation
 `
 npm install

@@ -1,3 +1,16 @@
 .ct-chart {
   height: 300px;
+
+  .ct-label {
+    color: white !important;
+    fill: white !important;
+  }
+
+  .ct-grid {
+    stroke: white !important;
+  }
+}
+
+.ct-bar {
+  stroke: #E64759 !important;
 }
